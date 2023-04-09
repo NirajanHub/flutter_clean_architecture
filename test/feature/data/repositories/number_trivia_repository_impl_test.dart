@@ -21,8 +21,8 @@ void main() {
   mockRemoteDataSource = MockRemoteDataSource();
   mockNetworkInfo = MockNetworkInfo();
   repository = NumberTriviaRepositoryImpl(
-    remoteDataSource: mockRemoteDataSource,
-    localDataSource: mockLocalDataSource,
+    numberTriviaRemoteDataSource: mockRemoteDataSource,
+    numberTriviaLocalDataSource: mockLocalDataSource,
     networkInfo: mockNetworkInfo
   );
 
