@@ -17,12 +17,12 @@ void main() {
     dataSource = NumberTriviaRemoteDataSourceImpl(client: mockHttpClient);
   });
 
-  void _setUpMockHttpClientSuccess200() {
+  void setUpMockHttpClientSuccess200() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(fixture('trivia.json'), 200));
   }
 
-  void _setUpMockHttpClientFailure404() {
+  void setUpMockHttpClientFailure404() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response('Server Exception', 404));
   }
@@ -33,7 +33,7 @@ void main() {
     test('''should  perform a GET request on a URL with number being 
     endpoint and with applicaion/json header''', () async {
       //arrange
-      _setUpMockHttpClientSuccess200();
+      setUpMockHttpClientSuccess200();
       //act
       dataSource.getConcreteNumberTrivia(tNumber);
       //assert
@@ -45,7 +45,7 @@ void main() {
     test('''should return number trivia when the success code is 200''',
         () async {
       //arrange
-      _setUpMockHttpClientSuccess200();
+      setUpMockHttpClientSuccess200();
       //act
       final result = await dataSource.getConcreteNumberTrivia(tNumber);
       //assert
@@ -55,7 +55,7 @@ void main() {
         '''should throw a ServerException when the response code is 404 or other''',
         () async {
       //arrange
-      _setUpMockHttpClientFailure404();
+      setUpMockHttpClientFailure404();
       //act
       final result = dataSource.getConcreteNumberTrivia;
       //assert
@@ -65,12 +65,11 @@ void main() {
   });
 
   group('getRandomNumberTrivia', () {
-   
     const tNumberTriviaModel = NumberTriviaModel(text: 'Test', number: 1);
     test('''should  perform a GET request on a URL with number being 
     endpoint and with applicaion/json header''', () async {
       //arrange
-      _setUpMockHttpClientSuccess200();
+      setUpMockHttpClientSuccess200();
       //act
       dataSource.getRandomNumberTrivia();
       //assert
@@ -82,7 +81,7 @@ void main() {
     test('''should return number trivia when the success code is 200''',
         () async {
       //arrange
-      _setUpMockHttpClientSuccess200();
+      setUpMockHttpClientSuccess200();
       //act
       final result = await dataSource.getRandomNumberTrivia();
       //assert
@@ -92,12 +91,11 @@ void main() {
         '''should throw a ServerException when the response code is 404 or other''',
         () async {
       //arrange
-      _setUpMockHttpClientFailure404();
+      setUpMockHttpClientFailure404();
       //act
       final result = dataSource.getRandomNumberTrivia()!;
       //assert
-      expect(
-          () => result, throwsA(const TypeMatcher<ServerException>()));
+      expect(() => result, throwsA(const TypeMatcher<ServerException>()));
     });
   });
 }

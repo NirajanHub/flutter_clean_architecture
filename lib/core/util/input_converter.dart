@@ -2,9 +2,9 @@ import 'package:clean_architecutre_reso_coder/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
 
 class InputConverter {
-  Either<Failure, int> stringToUnsignedInteger(String str) {
+  Either<Failure, int>? stringToUnsignedInteger(String? str) {
     try {
-      final integer = int.parse(str);
+      final integer = int.parse(str!);
       if (integer < 0) throw const FormatException();
       return Right(integer);
     } on FormatException {
